@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="CustomerApp.Example2View"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CustomerApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel HorizontalAlignment="Left" Height="551" VerticalAlignment="Top" Width="448" Margin="50,50,0,0">
+
+            <TextBlock x:Name="textBlock2" FontSize="32" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Continuous Update Example" VerticalAlignment="Top"/>
+            <TextBlock x:Name="textBlock1" HorizontalAlignment="Stretch"  TextWrapping="Wrap" Text="Topic Message to Send: " VerticalAlignment="Top" Margin="0,20,0,0"/>
+            <TextBox x:Name="TopicMessage" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <Button x:Name="ButtonTopicSend" Content="Send Message to Topic" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="TopicSendClick" Margin="0,20,0,0"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Latest Topic Received: " VerticalAlignment="Top" Margin="0,20,0,0"/>
+            <TextBlock x:Name="TopicReceived" HorizontalAlignment="Stretch" TextWrapping="Wrap"  VerticalAlignment="Top"/>            
+                      
+            <Button x:Name="button" Content="Go To Basic Example" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="Example1Click" Margin="0,30,0,0"/>
+            <Button x:Name="button1" Content="Go To Two Device Example" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="TwoDeviceClick" Margin="0,10,0,0"/>
+        </StackPanel>
+    </Grid>
+</Page>

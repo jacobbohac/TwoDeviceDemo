@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoDeviceDemo", "TwoDeviceDemo\TwoDeviceDemo.csproj", "{486D8D80-5B67-48CD-B079-2D187231D7EB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerApp", "CustomerApp\CustomerApp.csproj", "{BCD47F44-815D-4D40-B9E2-59735B4FAB4A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankerApp", "BankerApp\BankerApp.csproj", "{828DC4A1-BEE9-4B64-97EC-72F2A787ED86}"
@@ -19,24 +17,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Debug|ARM.ActiveCfg = Debug|ARM
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Debug|ARM.Build.0 = Debug|ARM
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Debug|ARM.Deploy.0 = Debug|ARM
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Debug|x64.ActiveCfg = Debug|x64
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Debug|x64.Build.0 = Debug|x64
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Debug|x64.Deploy.0 = Debug|x64
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Debug|x86.ActiveCfg = Debug|x86
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Debug|x86.Build.0 = Debug|x86
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Debug|x86.Deploy.0 = Debug|x86
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Release|ARM.ActiveCfg = Release|ARM
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Release|ARM.Build.0 = Release|ARM
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Release|ARM.Deploy.0 = Release|ARM
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Release|x64.ActiveCfg = Release|x64
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Release|x64.Build.0 = Release|x64
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Release|x64.Deploy.0 = Release|x64
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Release|x86.ActiveCfg = Release|x86
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Release|x86.Build.0 = Release|x86
-		{486D8D80-5B67-48CD-B079-2D187231D7EB}.Release|x86.Deploy.0 = Release|x86
 		{BCD47F44-815D-4D40-B9E2-59735B4FAB4A}.Debug|ARM.ActiveCfg = Debug|ARM
 		{BCD47F44-815D-4D40-B9E2-59735B4FAB4A}.Debug|ARM.Build.0 = Debug|ARM
 		{BCD47F44-815D-4D40-B9E2-59735B4FAB4A}.Debug|ARM.Deploy.0 = Debug|ARM

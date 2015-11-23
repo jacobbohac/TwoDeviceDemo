@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="CustomerApp.MainPage"
+    x:Class="CustomerApp.Example3"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CustomerApp"
@@ -8,6 +8,20 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel HorizontalAlignment="Left" Height="551" VerticalAlignment="Top" Width="448" Margin="50,50,0,0">
+            <TextBlock x:Name="textBlock3" FontSize="32" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Customer Device" VerticalAlignment="Top"/>
+            <TextBlock x:Name="textBlock2" FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Two Device Communication" VerticalAlignment="Top"/>
 
+            <TextBlock x:Name="textBlock1" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Message: " VerticalAlignment="Top" Margin="0,20,0,0"/>
+            <TextBox x:Name="TopicMessage" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            
+            <Button x:Name="ButtonTopicSend" Content="Send Your Message to the Banker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="TopicSendClick"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Banker Says: " VerticalAlignment="Top" Margin="0,20,0,0"/>
+            <TextBlock x:Name="TopicReceived" HorizontalAlignment="Stretch"  TextWrapping="Wrap"  VerticalAlignment="Top"/>
+            <Button x:Name="button" Content="Basic Example" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="BasicExampleClick" Margin="0,30,0,0"/>
+            <Button x:Name="button1" Content="Continuous Example" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ContinuousClick" Margin="0,10,0,0"/>
+
+
+        </StackPanel>
     </Grid>
 </Page>

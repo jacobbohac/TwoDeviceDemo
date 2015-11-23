@@ -9,5 +9,16 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+        <StackPanel HorizontalAlignment="Left" Height="551" VerticalAlignment="Top" Width="448" Margin="50,50,0,0">
+            <TextBlock x:Name="textBlock3" FontSize="32" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Banker Device" VerticalAlignment="Top"/>
+            <TextBlock x:Name="textBlock2" FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Two Device Communication" VerticalAlignment="Top"/>
+            <TextBlock x:Name="textBlock1" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Message: " VerticalAlignment="Top" Margin="0,20,0,0"/>
+            <TextBox x:Name="TopicMessage" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            
+            <Button x:Name="ButtonTopicSend" Content="Send Your Message to the Customer" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Click="TopicSendClick"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Customer Says: " VerticalAlignment="Top" Margin="0,20,0,0"/>
+            <TextBlock x:Name="TopicReceived" HorizontalAlignment="Stretch" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+
+        </StackPanel>
     </Grid>
 </Page>
