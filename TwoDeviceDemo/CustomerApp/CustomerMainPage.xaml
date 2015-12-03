@@ -18,8 +18,8 @@
             <Button x:Name="ButtonTopicSend" Content="Send Your Message to the Banker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="TopicSendClick"/>
             <TextBlock x:Name="textBlock" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Banker Says: " VerticalAlignment="Top" Margin="0,20,0,0"/>
             <TextBlock x:Name="TopicReceived" HorizontalAlignment="Stretch"  TextWrapping="Wrap"  VerticalAlignment="Top"/>
-            <Button x:Name="button" Content="Basic Example" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="BasicExampleClick" Margin="0,30,0,0"/>
-            <Button x:Name="button1" Content="Continuous Example" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ContinuousClick" Margin="0,10,0,0"/>
+            <!--<Button x:Name="button" Content="Basic Example" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="BasicExampleClick" Margin="0,30,0,0"/>
+            <Button x:Name="button1" Content="Continuous Example" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ContinuousClick" Margin="0,10,0,0"/>-->
 
 
         </StackPanel>

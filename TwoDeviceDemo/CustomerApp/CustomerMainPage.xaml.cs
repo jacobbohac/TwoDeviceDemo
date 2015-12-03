@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -16,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Amqp;
 using ppatierno.AzureSBLite;
 using ppatierno.AzureSBLite.Messaging;
 
@@ -37,12 +39,17 @@ namespace CustomerApp
         {
             this.InitializeComponent();
 
+            //Amqp.Trace.TraceLevel = Amqp.TraceLevel.Frame | Amqp.TraceLevel.Verbose;
+            //Amqp.Trace.TraceListener = (f, a) => Debug.WriteLine(DateTime.Now.ToString("[hh:ss.fff]") + " " + Fx.Format(f, a));
+
             builder = new ServiceBusConnectionStringBuilder(this.ConnectionString);
             builder.TransportType = TransportType.Amqp;
             factory = MessagingFactory.CreateFromConnectionString(this.ConnectionString);
             topicClient = factory.CreateTopicClient("topic1");
+            
             subClient = factory.CreateSubscriptionClient("topic1", "CustomerChannel", ReceiveMode.PeekLock);
 
+            factory.Close();
 
 
             Task.Run(async () =>
@@ -59,7 +66,37 @@ namespace CustomerApp
             message.Properties["message"] = TopicMessage.Text;
             message.Properties["recipient"] = "Banker";
 
-            topicClient.Send(message);
+            /// TRYING TO CUSTOM TIMEOUT
+            var tokenSource = new CancellationTokenSource();
+            CancellationToken token = tokenSource.Token;
+            int timeOut = 1000; // 1000 ms
+
+            try
+            {
+                var task = Task.Factory.StartNew(() => topicClient.Send(message), token);
+
+                if (!task.Wait(timeOut, token))
+                {
+                    Debug.WriteLine("The Task timed out!");
+                }
+            }
+            catch
+            {
+                Debug.WriteLine("Some kind of exception");
+            }
+
+
+            //try
+            //{
+
+            //    topicClient.Send(message);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine("Customer: Timeout Exception: " + ex.Message);
+            //}
+
+            TopicMessage.Text = String.Empty;
         }
 
         public async Task RunAsync()
@@ -70,23 +107,43 @@ namespace CustomerApp
             {
                 try
                 {
+                    Debug.WriteLine("Customer: try message recieve");
                     message = subClient.Receive();
 
-                    if (message.Properties["recipient"].Equals("Customer"))
-                    {
-                        Debug.WriteLine("\t message = " + (string) message.Properties["message"]);
+                    if(message != null) {
+                        Debug.WriteLine("Customer: message received");
 
-                        await this.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                        try
                         {
-                            this.TopicReceived.Text = (string) message.Properties["message"];
-                        });
+                            if (message.Properties["recipient"].Equals("Customer"))
+                            {
+                                Debug.WriteLine("Customer: message = " + (string) message.Properties["message"]);
+
+                                await this.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                                {
+                                    this.TopicReceived.Text = (string) message.Properties["message"];
+                                });
+                            }
+                        }
+                        catch
+                        {
+                            Debug.WriteLine("Customer: checking message.Properties for key failed");
+                        }
+
+
+                        Debug.WriteLine("Customer: try message complete");
+                        message.Complete();
+                        Debug.WriteLine("Customer: message complete successful");
                     }
-                    message.Complete();
+                    else
+                    {
+                        Debug.WriteLine("Customer: message was null");
+                    }
                 }
                 catch(Exception e)
                 {
-                    message.Complete();
-                    Debug.WriteLine("Caught Exception: " + e.Message);
+                    Debug.WriteLine("Customer: Caught Exception: " + e.Message);
+                    //message.Complete();
                 }
             }
         }

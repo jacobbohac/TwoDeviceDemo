@@ -102,8 +102,8 @@
     <Compile Include="Example2View.xaml.cs">
       <DependentUpon>Example2View.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="CustomerMainPage.xaml.cs">
+      <DependentUpon>CustomerMainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Example1.xaml.cs">
       <DependentUpon>Example1.xaml</DependentUpon>
@@ -135,7 +135,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="CustomerMainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

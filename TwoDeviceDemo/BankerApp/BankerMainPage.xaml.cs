@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -20,6 +21,7 @@ using Windows.UI.Xaml.Navigation;
 
 using ppatierno.AzureSBLite;
 using ppatierno.AzureSBLite.Messaging;
+using Amqp;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -39,12 +41,16 @@ namespace BankerApp
         {
             this.InitializeComponent();
 
+            //Amqp.Trace.TraceLevel = Amqp.TraceLevel.Frame | Amqp.TraceLevel.Verbose;
+            //Amqp.Trace.TraceListener = (f, a) => Debug.WriteLine(DateTime.Now.ToString("[hh:ss.fff]") + " " + Fx.Format(f, a));
+
             builder = new ServiceBusConnectionStringBuilder(this.ConnectionString);
             builder.TransportType = TransportType.Amqp;
             factory = MessagingFactory.CreateFromConnectionString(this.ConnectionString);
             topicClient = factory.CreateTopicClient("topic1");
             subClient = factory.CreateSubscriptionClient("topic1", "BankerChannel", ReceiveMode.PeekLock);
 
+            factory.Close();
 
             Task.Run(async () =>
             {
@@ -60,7 +66,36 @@ namespace BankerApp
             message.Properties["message"] = TopicMessage.Text;
             message.Properties["recipient"] = "Customer";
 
-            topicClient.Send(message);
+            /// TRYING TO CUSTOM TIMEOUT
+            var tokenSource = new CancellationTokenSource();
+            CancellationToken token = tokenSource.Token;
+            int timeOut = 1000; // 1000 ms
+
+            try
+            {
+                var task = Task.Factory.StartNew(() => topicClient.Send(message), token);
+                if (!task.Wait(timeOut, token))
+                {
+                    Debug.WriteLine("The Task timed out!");
+                }
+            }
+            catch
+            {
+                Debug.WriteLine("Some kind of exception");
+            }
+
+
+
+            //try
+            //{
+            //    topicClient.Send(message);
+            //}
+            //catch
+            //{
+
+            //}
+
+            TopicMessage.Text = String.Empty;
         }
 
         public async Task RunAsync()
@@ -71,22 +106,44 @@ namespace BankerApp
             {
                 try
                 {
+                    Debug.WriteLine("Banker: try message recieve");
                     message = subClient.Receive();
-                    if (message.Properties["recipient"].Equals("Banker"))
-                    {
-                        Debug.WriteLine("\t message = " + (string) message.Properties["message"]);
 
-                        await this.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                    if (message != null)
+                    {
+                        Debug.WriteLine("Banker: message received");
+
+                        try
                         {
-                            this.TopicReceived.Text = (string) message.Properties["message"];
-                        });
+                            if (message.Properties["recipient"].Equals("Banker"))
+                            {
+                                Debug.WriteLine("Banker: message = " + (string)message.Properties["message"]);
+
+                                await this.Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+                                {
+                                    this.TopicReceived.Text = (string)message.Properties["message"];
+                                });
+                            }
+                        }
+                        catch
+                        {
+                            Debug.WriteLine("Banker: checking message.Properties for key failed");
+                        }
+
+
+                        Debug.WriteLine("Banker: try message complete");
+                        message.Complete();
+                        Debug.WriteLine("Banker: message complete successful");
                     }
-                    message.Complete();
+                    else
+                    {
+                        Debug.WriteLine("Banker: message was null");
+                    }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    message.Complete();
-                    Debug.WriteLine("Caught Exception: " + e.Message);
+                    Debug.WriteLine("Banker: Caught Exception: " + e.Message);
+                    //message.Complete();
                 }
             }
         }
